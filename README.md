@@ -3,3 +3,5 @@
 ## ERD
 
 ![ERD](/vendor/assets/images/erd.png "ERD")
+
+## Changelogs
