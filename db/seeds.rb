@@ -5,3 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Meal.destroy_all
+DeliveryOrder.destroy_all
+
+10.times do
+  Meal.create(
+    name: Faker::Food.dish,
+    byline: Faker::Food.spice
+  )
+end
+
+5.times do
+  DeliveryOrder.create(
+    order_id: "GO#{rand(999)}",
+    serving_datetime: Faker::Time.forward(30, :evening) #TODO: find out why it's :evening
+  )
+end
