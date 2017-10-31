@@ -17,8 +17,11 @@ DeliveryOrder.destroy_all
 end
 
 5.times do
+  random_date = Faker::Date.forward(30)
+  delivery_slots = (0...6).to_a.sample
+
   DeliveryOrder.create(
     order_id: "GO#{rand(999)}",
-    serving_datetime: Faker::Time.forward(30, :evening) #TODO: find out why it's :evening
+    serving_datetime: random_date + 11.hours + (delivery_slots * 30).minutes
   )
 end
