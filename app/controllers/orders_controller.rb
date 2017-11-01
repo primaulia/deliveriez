@@ -5,13 +5,17 @@ class OrdersController < ApplicationController
               .as_json(:except => [:id, :serving_datetime])
 
     render json: { "orders" => @orders }
-    #json.orders @orders, :order_id, :serving_datetime
   end
 
   def show
-    
+    @order = DeliveryOrder
+             .select(:order_id, :serving_datetime)
+             .joins(:order_item)
+             .where(order_id: params[:order_id])
+             .as_json(:except => [:id, :serving_datetime])
 
 
-    render html: "find order #{params[:order_id]}"
+
+    render json: { "order" => @order.first }
   end
 end

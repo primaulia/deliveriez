@@ -1,6 +1,11 @@
 class DeliveryOrder < ApplicationRecord
-  attribute :delivery_date, :string, default: 'test'
-  attribute :delivery_time, :string, default: 'test2'
+  # has_many :order_items
+
+  has_many :order_items, :class_name => "OrderItem"
+
+
+  attribute :delivery_date, :string
+  attribute :delivery_time, :string
 
   def delivery_date
     self.serving_datetime.strftime('%Y-%m-%d')

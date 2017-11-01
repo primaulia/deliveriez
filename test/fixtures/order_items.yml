@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  delivery_order: one
+  serving_date: 2017-11-01 22:39:00
+  meal: one
+  quantity: 1
+  unit_price: 1
+
+two:
+  delivery_order: two
+  serving_date: 2017-11-01 22:39:00
+  meal: two
+  quantity: 1
+  unit_price: 1
