@@ -4,6 +4,7 @@ class DeliveryOrder < ApplicationRecord
 
   has_many :order_items, :dependent => :destroy
 
+  # custom attributes derived from :serving_datetime
   attribute :delivery_date, :string
   attribute :delivery_time, :string
 
@@ -15,5 +16,10 @@ class DeliveryOrder < ApplicationRecord
     start_time = self.serving_datetime.strftime('%H:%M')
     end_time = (self.serving_datetime + 30.minutes).strftime('%H:%M')
     "#{start_time}-#{end_time}"
+  end
+
+  # customize json serializer so model will automatically hides :id and :serving_datetime
+  def as_json(options = {})
+    super(options.merge({ except: [:id, :serving_datetime] }))
   end
 end

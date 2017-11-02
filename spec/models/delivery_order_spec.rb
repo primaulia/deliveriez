@@ -2,10 +2,7 @@ require 'rails_helper'
 
 describe DeliveryOrder, :type => :model do
   subject do
-    DeliveryOrder.new(
-      order_id: 'GO123',
-      serving_datetime: Faker::Date.forward(30)
-    )
+    build(:delivery_order)
   end
 
   describe '.new' do

@@ -2,10 +2,7 @@ require 'rails_helper'
 
 describe Meal, :type => :model do
   subject do
-    Meal.new(
-      name: 'Buffalo Chicken on Sweet Potato Mash and Celery Confit',
-      byline: 'charred cauliflower and tomato confit'
-    )
+    build(:meal)
   end
 
   describe '.new' do
