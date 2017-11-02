@@ -26,13 +26,11 @@ end
     serving_datetime: random_date + 11.hours + (delivery_slots * 30).minutes
   )
 
-  new_order_item = created_order.order_items.build
-  random_meal = Meal.order("RANDOM()").first
-
-  new_order_item.serving_date = random_date + 11.hours + (delivery_slots * 30).minutes
-  new_order_item.meal = random_meal
-  new_order_item.quantity = rand(1..3)
-  new_order_item.unit_price = rand(495...2000)
-
-  new_order_item.save
+  random_meal = Meal.all.sample
+  created_order.order_items.create(
+    serving_date: random_date + 11.hours + (delivery_slots * 30).minutes,
+    meal_id: random_meal.id,
+    quantity: rand(1..3),
+    unit_price: rand(495...2000)
+  )
 end

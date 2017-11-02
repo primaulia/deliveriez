@@ -8,6 +8,7 @@ end
 # extra gem
 gem 'pry'
 gem 'faker', git: 'git@github.com:stympy/faker.git'
+gem 'shoulda'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

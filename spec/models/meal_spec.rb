@@ -1,15 +1,23 @@
 require 'rails_helper'
 
 describe Meal, :type => :model do
-  describe ".new" do
-    it "is not valid without a name" do
-      meal = Meal.new(name: nil)
-      expect(meal).to_not be_valid
+  subject do
+    Meal.new(
+      name: 'Buffalo Chicken on Sweet Potato Mash and Celery Confit',
+      byline: 'charred cauliflower and tomato confit'
+    )
+  end
+
+  describe '.new' do
+    it 'is valid with valid attributes' do
+      expect(subject).to be_valid
     end
 
-    it "is not valid without a byline" do
-      meal = Meal.new(byline: nil)
-      expect(meal).to_not be_valid
-    end    
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:byline) }
+  end
+
+  describe 'association' do
+    it { should have_many(:order_items) }
   end
 end

@@ -1,17 +1,23 @@
 require 'rails_helper'
 
 describe DeliveryOrder, :type => :model do
-  subject { DeliveryOrder.new() }
+  subject do
+    DeliveryOrder.new(
+      order_id: 'GO123',
+      serving_datetime: Faker::Date.forward(30)
+    )
+  end
 
-  describe ".new" do
-    it "is not valid without a order_id" do
-      delivery_order = DeliveryOrder.new(order_id: nil)
-      expect(delivery_order).to_not be_valid
+  describe '.new' do
+    it 'is valid with valid attributes' do
+      expect(subject).to be_valid
     end
 
-    it "is not valid without a serving_datetime" do
-      delivery_order = DeliveryOrder.new(serving_datetime: nil)
-      expect(delivery_order).to_not be_valid
-    end
+    it { should validate_presence_of(:order_id) }
+    it { should validate_presence_of(:serving_datetime) }
+  end
+
+  describe 'associations' do
+    it { should have_many(:order_items) }
   end
 end
