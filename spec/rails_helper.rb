@@ -8,6 +8,14 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'support/factory_bot'
+require 'simplecov'
+SimpleCov.start 'rails' do
+  add_filter %r{/spec/}
+  add_filter %r{/helper/}
+  add_filter %r{/mailers/}
+  add_filter %r{/channels/}
+  add_filter %r{/job/}
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

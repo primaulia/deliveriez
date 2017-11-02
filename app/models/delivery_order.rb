@@ -18,8 +18,9 @@ class DeliveryOrder < ApplicationRecord
     "#{start_time}-#{end_time}"
   end
 
-  # customize json serializer so model will automatically hides :id and :serving_datetime
+  # customize json serializer so model will automatically show only order_id
   def as_json(options = {})
-    super(options.merge({ except: [:id, :serving_datetime] }))
+    options[:only] ||= [:order_id, :delivery_date, :delivery_time]
+    super(options)
   end
 end
