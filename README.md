@@ -21,3 +21,7 @@
     - Creation or relationship between `Meal` -> `OrderItem`
     - Creation or relationship between `DeliveryOrder` -> `OrderItem`
     - Update to the `seeds.rb`
+4. 2 Nov
+    - Refactoring on test, models, and controllers
+    - Updates on `seeds.rb`
+    - Implement `simplecov` for easy viewing on code coverage
