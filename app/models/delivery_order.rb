@@ -1,8 +1,8 @@
 class DeliveryOrder < ApplicationRecord
-  # has_many :order_items
+  validates_presence_of :order_id, :message => "Order ID can't be blank"
+  validates_presence_of :serving_datetime, :message => "Serving date & time can't be blank"
 
-  has_many :order_items, :class_name => "OrderItem"
-
+  has_many :order_items
 
   attribute :delivery_date, :string
   attribute :delivery_time, :string
