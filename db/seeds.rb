@@ -8,6 +8,7 @@
 
 Meal.destroy_all
 DeliveryOrder.destroy_all
+OrderItem.destroy_all
 
 10.times do
   Meal.create(
@@ -20,8 +21,18 @@ end
   random_date = Faker::Date.forward(30)
   delivery_slots = (0...6).to_a.sample
 
-  DeliveryOrder.create(
+  created_order = DeliveryOrder.create(
     order_id: "GO#{rand(999)}",
     serving_datetime: random_date + 11.hours + (delivery_slots * 30).minutes
   )
+
+  2.times do
+    random_meal = Meal.all.sample
+    created_order.order_items.create(
+      serving_date: random_date + 11.hours + (delivery_slots * 30).minutes,
+      meal_id: random_meal.id,
+      quantity: rand(1..3),
+      unit_price: rand(495...2000)
+    )    
+  end
 end
