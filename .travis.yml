@@ -1,0 +1,10 @@
+language: ruby
+install:
+- bundle install
+script: rspec
+deploy:
+  api_key:
+    secure: J5kNiRC/NfvhVRHcvV0qdW7bcvdWyTVP5bYBrrCx74N/G+OwQIGviLBpzNFkGPRNiOdexnRTbn2nEXadTxYB3xPsEN283SDp1JVGBqFVpXHFb3QoyFoYc4DvN9iliWEkWKzBl0NFJjD/k0ZTGAbx0vmO+yVVfgCqDQ8VVzwADJ41RdKP4xOmbAOG54tsgS+tbA1U3UPx0mxUKU+Z//5kP9TkLhBkGqJ70/eJLuO77L6/tHt+m65qoDszhv/sWwhDlCC8IfQ97Dh0YQD1Hu7lJuc0RNO6ToOpUtq419AL6c3TqcKFHvJLduTDigI/6UdftBNtvBXxr2IreUp6d3la9+lG4zsqv0EvQ5ZfgQ/4BMXcluZ8mRgJ1i1NqqSxWwnSdLpawiGdllzuvcXztSwu1SeQ3WYN3gSBwhzqwUlr2JLb+H9Syfsz7faP9xamXcCNnG/UlS1K4Zrxrg7pSsSNhmFBRiQRNv8mLmOFN+1hCWj8IoNFMY6pvjwYEjUdD0E0o8q1h5BBVa2nxDpJvXG0/pXWNu6UOyNxzE+LmM4+B78rR5JkEv3mGz3GpsxkBQnzUuHHAiMtLOmWJjzWHKVxNz6IGKPS2Az3b71/SebyuZOTQR8WE2nKr1dI69zyLtGOhUledh/6ug6rlzHezkBLZXafjW+jlfaRtQeL+ozfjf0=
+  run:
+    - "rails db:migrate"
+    - "rails db:seed"
