@@ -1,4 +1,4 @@
-# DELIVERIEZ
+# [DELIVERIEZ](https://deliveriez.herokuapp.com/orders)
 
 ## ERD
 
@@ -25,3 +25,8 @@
     - Refactoring on test, models, and controllers
     - Updates on `seeds.rb`
     - Implement `simplecov` for easy viewing on code coverage
+5. 3 Nov
+    - Cleaning up codes
+    - Refactoring on tests and covering edge cases
+    - Readme updates
+    - Heroku deployment
