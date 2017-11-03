@@ -5,21 +5,16 @@ class OrdersController < ApplicationController
   end
 
   def show
-
-
-    # if @order.nil?
-    #   return render json: { status: 400, message: 'Order ID is invalid' }
-    # end
-
-    begin
-      @order = DeliveryOrder.find_by(order_id: params[:order_id])
-    rescue ActiveRecord::RecordNotFound
-      render html: 'test'
+    # check validity of params[:order_id]
+    unless DeliveryOrder.exists?(order_id: params[:order_id])
+      return render json: { status: 400, message: 'Order ID is invalid' },
+                    status: 400
     end
 
+    @order = DeliveryOrder.find_by(order_id: params[:order_id])
     @order_item = @order.order_items
 
-    # TODO: REFACTOR THIS
+    # TODO: May need to refactor this
     output = {
       order: {
         order_id: @order.order_id,
@@ -34,8 +29,6 @@ class OrdersController < ApplicationController
         end
       }
     }
-
-
 
     render json: output
   end

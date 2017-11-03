@@ -5,6 +5,7 @@ class DeliveryOrder < ApplicationRecord
   has_many :order_items, :dependent => :destroy
 
   # custom attributes derived from :serving_datetime
+  # so we can display date and time separately
   attribute :delivery_date, :string
   attribute :delivery_time, :string
 

@@ -48,15 +48,14 @@ describe OrdersController, :type => :request do
       }.to_json)
     end
 
-    it "should return json of error message if order id doesn't exist in the db" do
-
+    it "should return appropriate json if order id doesn't exist in the db" do
       get "/orders/123"
       expect(response.header['Content-Type']).to match(/application\/json/)
       expect(response.body).to eq({
         status: 400,
         message: 'Order ID is invalid'
       }.to_json)
-
+      expect(response.status).to eq(400)
     end
   end
 end
