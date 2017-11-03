@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 describe Meal, :type => :model do
-  subject do
-    build(:meal)
-  end
+  subject { build(:meal) }
 
   describe '.new' do
     it 'is valid with valid attributes' do

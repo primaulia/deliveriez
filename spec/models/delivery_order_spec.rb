@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 describe DeliveryOrder, :type => :model do
-  subject do
-    build(:delivery_order)
-  end
+  subject { build(:delivery_order) }
 
   describe '.new' do
     it 'is valid with valid attributes' do

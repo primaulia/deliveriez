@@ -2,8 +2,10 @@ require 'rails_helper'
 
 describe OrdersController, :type => :request do
   it { should route(:get, '/orders').to(action: :index) }
-  it { should route(:get, '/orders/GO676').to(action: :show, order_id: 'GO676') }
-
+  it do
+    should route(:get, '/orders/GO676')
+           .to(action: :show, order_id: 'GO676')
+  end
 
   describe '#index' do
     it 'should return json of all orders' do
@@ -12,8 +14,7 @@ describe OrdersController, :type => :request do
 
       get '/orders'
 
-      should respond_with(200)
-      expect(response.header['Content-Type']).to eq('application/json')
+      expect(response.header['Content-Type']).to match(/application\/json/)
       expect(response.body).to eq({ orders: all_orders }.to_json)
     end
   end
@@ -31,8 +32,6 @@ describe OrdersController, :type => :request do
 
       get "/orders/#{new_delivery_order.order_id}"
 
-
-      should respond_with(200)
       expect(response.body).to eq({
         order: {
           order_id: new_delivery_order.order_id,
@@ -47,6 +46,17 @@ describe OrdersController, :type => :request do
           end
         }
       }.to_json)
+    end
+
+    it "should return json of error message if order id doesn't exist in the db" do
+
+      get "/orders/123"
+      expect(response.header['Content-Type']).to match(/application\/json/)
+      expect(response.body).to eq({
+        status: 400,
+        message: 'Order ID is invalid'
+      }.to_json)
+
     end
   end
 end

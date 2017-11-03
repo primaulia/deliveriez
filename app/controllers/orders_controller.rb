@@ -5,8 +5,17 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = DeliveryOrder
-             .find_by(order_id: params[:order_id])
+
+
+    # if @order.nil?
+    #   return render json: { status: 400, message: 'Order ID is invalid' }
+    # end
+
+    begin
+      @order = DeliveryOrder.find_by(order_id: params[:order_id])
+    rescue ActiveRecord::RecordNotFound
+      render html: 'test'
+    end
 
     @order_item = @order.order_items
 
