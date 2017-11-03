@@ -38,11 +38,11 @@ gem 'rspec-rails'
 
 # extra gem for development environment
 gem 'pry'
+gem 'faker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'faker'
 
   gem 'shoulda'
   gem 'factory_bot_rails'
