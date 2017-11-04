@@ -6,6 +6,7 @@ cache: bundler
 services:
   - postgresql
 before_install:
+  - "bundle install"
   - "rails db:create"
 deploy:
   provider: heroku
