@@ -15,6 +15,8 @@ SimpleCov.start 'rails' do
   add_filter %r{/mailers/}
   add_filter %r{/channels/}
   add_filter %r{/job/}
+  add_filter 'app/helpers/application_helper.rb'
+  add_filter 'app/jobs/application_job.rb'
 end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

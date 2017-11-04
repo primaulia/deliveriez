@@ -8,54 +8,61 @@ describe OrdersController, :type => :request do
   end
 
   describe '#index' do
-    it 'should return json of all orders' do
+    let(:all_orders) { DeliveryOrder.all }
+    setup do
       create(:delivery_order)
-      all_orders = DeliveryOrder.all
-
       get '/orders'
-
-      expect(response.header['Content-Type']).to match(/application\/json/)
-      expect(response.body).to eq({ orders: all_orders }.to_json)
     end
+
+    it { expect(response.header['Content-Type']).to match(/application\/json/) }
+    it { expect(response.body).to eq({ orders: all_orders }.to_json) }
   end
 
   describe '#show' do
-    it 'should return json of one delivery order detail and related order items' do
-      new_delivery_order = create(:delivery_order)
-      new_meal = create(:meal)
-
-      create(
+    context 'when order id is valid' do
+      let(:new_delivery_order) { create(:delivery_order) }
+      let(:new_meal) { create(:meal) }
+      setup do
+        create(
           :order_item,
           delivery_order_id: new_delivery_order.id,
           meal_id: new_meal.id
-      )
+        )
 
-      get "/orders/#{new_delivery_order.order_id}"
+        get "/orders/#{new_delivery_order.order_id}"
+      end
 
-      expect(response.body).to eq({
-        order: {
-          order_id: new_delivery_order.order_id,
-          delivery_date: new_delivery_order.delivery_date,
-          delivery_time: new_delivery_order.delivery_time,
-          order_items: new_delivery_order.order_items.map do |item|
-            {
-              name: item.meal.name,
-              quantity: item.quantity,
-              total_price: item.unit_price * item.quantity
-            }
-          end
-        }
-      }.to_json)
+
+      it { expect(response.header['Content-Type']).to match(/application\/json/) }
+      it do
+        expect(response.body).to eq({
+          order: {
+            order_id: new_delivery_order.order_id,
+            delivery_date: new_delivery_order.delivery_date,
+            delivery_time: new_delivery_order.delivery_time,
+            order_items: new_delivery_order.order_items.map do |item|
+              {
+                name: item.meal.name,
+                quantity: item.quantity,
+                total_price: item.unit_price * item.quantity
+              }
+            end
+          }
+        }.to_json)
+      end
     end
 
-    it "should return appropriate json if order id doesn't exist in the db" do
-      get "/orders/123"
-      expect(response.header['Content-Type']).to match(/application\/json/)
-      expect(response.body).to eq({
-        status: 400,
-        message: 'Order ID is invalid'
-      }.to_json)
-      expect(response.status).to eq(400)
+    context 'when order id is invalid' do
+      setup { get "/orders/123" }
+
+      it { expect(response.header['Content-Type']).to match(/application\/json/) }
+      it { expect(response.status).to eq(400)}
+      it do
+        expect(response.body).to eq({
+          status: 400,
+          message: 'Order ID is invalid'
+        }.to_json)
+      end
     end
   end
 end
