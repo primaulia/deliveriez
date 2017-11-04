@@ -1,8 +1,8 @@
 class DeliveryOrder < ApplicationRecord
+  has_many :order_items, :dependent => :destroy
+
   validates_presence_of :order_id
   validates_presence_of :serving_datetime
-
-  has_many :order_items, :dependent => :destroy
 
   # custom attributes derived from :serving_datetime
   # so we can display date and time separately
