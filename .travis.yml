@@ -7,7 +7,6 @@ services:
   - postgresql
 before_install:
   - "bundle install"
-  - "rails db:environment:set RAILS_ENV=test"
   - "rails db:create"
 deploy:
   provider: heroku
