@@ -2,11 +2,13 @@ language: ruby
 install:
 - bundle install
 script: rspec
+cache: bundler
 services:
   - postgresql
 before_install:
-  - "rake db:environment:set RAILS_ENV=test"
-  - "rake db:create"
+  - "bundle install"
+  - "rails db:environment:set RAILS_ENV=test"
+  - "rails db:create"
 deploy:
   provider: heroku
   api_key:
