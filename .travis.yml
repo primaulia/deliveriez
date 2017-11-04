@@ -2,7 +2,6 @@ language: ruby
 install:
 - bundle install
 script: rspec
-cache: bundler
 services:
   - postgresql
 before_install:
