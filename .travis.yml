@@ -6,8 +6,8 @@ cache: bundler
 services:
   - postgresql
 before_install:
-  - "rails db:environment:set RAILS_ENV=test"
-  - "rails db:create"
+  - "rake db:environment:set RAILS_ENV=test"
+  - "rake db:create"
 deploy:
   provider: heroku
   api_key:
