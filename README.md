@@ -1,7 +1,5 @@
 # [DELIVERIEZ](https://deliveriez.herokuapp.com/orders) [![Build Status](https://travis-ci.org/primaulia/deliveriez.svg?branch=master)](https://travis-ci.org/primaulia/deliveriez)
 
-## [Heroku Link](https://deliveriez.herokuapp.com/orders)
-
 ## ERD
 ![ERD](/vendor/assets/images/erd.png "ERD")
 
