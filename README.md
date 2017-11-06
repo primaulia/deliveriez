@@ -63,3 +63,8 @@
     - Changing root route to `/orders` for heroku sake
     - Integration with Travis CI
     - Readme updates
+7. **6 Nov**
+    - Created new model `Feedback`
+    - Created polymorphic association with `OrderItem` & `DeliveryOrder`
+    - Setup `vue.js` within rails assets pipeline
+    - Created new respond for `/orders`
