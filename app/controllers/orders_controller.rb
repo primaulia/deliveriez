@@ -30,6 +30,9 @@ class OrdersController < ApplicationController
       }
     }
 
-    render json: output
+    respond_to do |format|
+      format.html 
+      format.json { render json: output }
+    end
   end
 end
