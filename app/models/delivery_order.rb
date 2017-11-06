@@ -15,13 +15,22 @@ class DeliveryOrder < ApplicationRecord
     self.serving_datetime.strftime('%Y-%m-%d')
   end
 
+  def delivery_date_erb
+    self.serving_datetime.strftime('%B %e')
+  end
+
   def delivery_time
     start_time = self.serving_datetime.strftime('%H:%M')
     end_time = (self.serving_datetime + 30.minutes).strftime('%H:%M')
     "#{start_time}-#{end_time}"
   end
 
-  # customize json serializer so model will automatically show only order_id
+  def delivery_time_erb
+    start_time = self.serving_datetime.strftime('%l:%M%p')
+    "#{start_time}"
+  end
+
+  # customize json serializer so model will automatically show only order_id, delivery_date, and delivery_time
   def as_json(options = {})
     options[:only] ||= [:order_id, :delivery_date, :delivery_time]
     super(options)
