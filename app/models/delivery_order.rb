@@ -11,6 +11,9 @@ class DeliveryOrder < ApplicationRecord
   attribute :delivery_date, :string
   attribute :delivery_time, :string
 
+  # 6 nov new virtual attribute to match the json structure
+  attribute :feedback_submitted, :boolean
+
   def delivery_date
     self.serving_datetime.strftime('%Y-%m-%d')
   end
@@ -30,9 +33,13 @@ class DeliveryOrder < ApplicationRecord
     "#{start_time}"
   end
 
+  def feedback_submitted
+    ! self.feedback.nil?
+  end
+
   # customize json serializer so model will automatically show only order_id, delivery_date, and delivery_time
   def as_json(options = {})
-    options[:only] ||= [:order_id, :delivery_date, :delivery_time]
+    options[:only] ||= [:id, :order_id, :delivery_date, :delivery_time, :feedback_submitted]
     super(options)
   end
 end

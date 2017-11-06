@@ -1,2 +1,13 @@
-<h1>Orders#index</h1>
-<p>Find me in app/views/orders/index.html.erb</p>
+<h1>All orders</h1>
+<ul>
+  <% @orders.each do |order| %>
+    <li>
+      <h2><%= order.order_id %></h2>
+      <% unless order.feedback_submitted %>
+        <a href="#">Feedback now</a>
+      <% else %>
+        <span>Thank you!</span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

@@ -1,7 +1,13 @@
 class OrdersController < ApplicationController
   def index
     @orders = DeliveryOrder.all
-    render json: { "orders" => @orders }
+
+    respond_to do |format|
+      format.html
+      format.json { render json: {
+        "orders" => @orders 
+      } }
+    end
   end
 
   def show
@@ -31,7 +37,7 @@ class OrdersController < ApplicationController
     }
 
     respond_to do |format|
-      format.html
+      format.erb
       format.json { render json: output }
     end
   end
