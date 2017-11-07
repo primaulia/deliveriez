@@ -1,13 +1,8 @@
 <h1>All orders</h1>
 <ul>
-  <% @orders.each do |order| %>
-    <li>
-      <h2><%= order.order_id %></h2>
-      <% unless order.feedback_submitted %>
-        <a href="#">Feedback now</a>
-      <% else %>
-        <span>Thank you!</span>
-      <% end %>
-    </li>
-  <% end %>
+  <order_list
+      v-for="order in orders"
+      :order="order"
+      :key="order.order_id">
+  </order_list>
 </ul>
