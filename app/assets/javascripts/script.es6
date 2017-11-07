@@ -1,3 +1,5 @@
+// 7 Nov, gotta change this to .es6 file. because heroku can't precompile es6 code
+
 const orderResource = Vue.resource('/orders{/order_id}.json')
 const feedbackByOrderResource = Vue.resource('/orders{/order_id}/feedbacks')
 

@@ -65,6 +65,12 @@
     - Readme updates
 7. **6 Nov**
     - Created new model `Feedback`
-    - Created polymorphic association with `OrderItem` & `DeliveryOrder`
+    - Created polymorphic association with `OrderItem` and `DeliveryOrder`
     - Setup `vue.js` within rails assets pipeline
     - Created new respond for `/orders`
+8. **7 Nov**
+    - Created two new vue component `order-list` and `modal`
+    - Modifying vue component connection with each other
+    - Minor modification on `DeliveryOrder` model
+    - Deploy to heroku
+    - Install `sprocket-es6` for precompilation purposes in heroku
