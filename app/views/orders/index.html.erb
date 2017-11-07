@@ -1,8 +1,17 @@
 <h1>All orders</h1>
-<ul>
+<p>
+  <!-- use router-link component for navigation. -->
+  <!-- specify the link by passing the `to` prop. -->
+  <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
+  <router-link to="/foo">Go to Foo</router-link>
+  <router-link to="/bar">Go to Bar</router-link>
+</p>
+<router-view></router-view>
+<!-- <ul>
   <order_list
       v-for="order in orders"
       :order="order"
-      :key="order.order_id">
+      :key="order.id"
+      >
   </order_list>
-</ul>
+</ul> -->
