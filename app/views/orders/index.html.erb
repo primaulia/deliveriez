@@ -1,17 +1,55 @@
 <h1>All orders</h1>
-<p>
-  <!-- use router-link component for navigation. -->
-  <!-- specify the link by passing the `to` prop. -->
-  <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
+
+<ul>
+  <li is="order-list"
+      v-for="order in orders"
+      :key="order.id"
+      :order="order"
+      @open="retrieveOrderItem(order.order_id)"
+      >
+  </li>
+</ul>
+
+<modal
+  :order="order"
+  v-if="showModal"
+  @close="showModal = false">
+  <!--
+    you can use custom content here to overwrite
+    default content
+  -->
+  <h3 slot="header">
+    Hi Ernest! How was your order {{ order.order_id }}
+    at {{ order.delivery_time_modal }}
+    on {{ order.delivery_date_modal }}
+  </h3>
+
+  <div slot="food">
+    <h3>How was the food?</h3>
+    <ul>
+      <li v-for="food in order.order_items">
+        {{ food.name }}
+        <button>thumbs up</button>
+        <button>thumbs down</button>
+      </li>
+    </ul>
+  </div>
+
+
+  <div slot="delivery">
+    <h3>How was our delivery?</h3>
+    <button>thumbs up</button>
+    <button>thumbs down</button>
+  </div>
+
+  <div slot="footer">
+    <input placeholder="Feel free to leave us a comment">
+    <button>Submit</button>
+  </div>
+</modal>
+
+<!-- <p>
   <router-link to="/foo">Go to Foo</router-link>
   <router-link to="/bar">Go to Bar</router-link>
 </p>
-<router-view></router-view>
-<!-- <ul>
-  <order_list
-      v-for="order in orders"
-      :order="order"
-      :key="order.id"
-      >
-  </order_list>
-</ul> -->
+<router-view></router-view> -->

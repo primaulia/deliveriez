@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: {
-        "orders" => @orders 
+        "orders" => @orders
       } }
     end
   end
@@ -22,22 +22,24 @@ class OrdersController < ApplicationController
 
     # TODO: May need to refactor this
     output = {
-      order: {
-        order_id: @order.order_id,
-        delivery_date: @order.delivery_date,
-        delivery_time: @order.delivery_time,
-        order_items: @order_item.map do |item|
-          {
-            name: item.meal.name,
-            quantity: item.quantity,
-            total_price: item.unit_price * item.quantity
-          }
-        end
-      }
+      order_id: @order.order_id,
+      delivery_date: @order.delivery_date,
+      delivery_time: @order.delivery_time,
+      delivery_date_modal: @order.delivery_date_erb,
+      delivery_time_modal: @order.delivery_time_erb,
+      order_items: @order_item.map do |item|
+        {
+          name: item.meal.name,
+          quantity: item.quantity,
+          total_price: item.unit_price * item.quantity
+        }
+      end
+      # order: {
+      # }
     }
 
     respond_to do |format|
-      format.erb
+      format.html
       format.json { render json: output }
     end
   end
