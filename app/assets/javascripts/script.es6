@@ -3,19 +3,18 @@
 const orderResource = Vue.resource('/orders{/order_id}.json')
 const feedbackByOrderResource = Vue.resource('/orders{/order_id}/feedbacks')
 
-Vue.http.interceptors.push({
-  request: function (request) {
-    console.log('token', $('[name="csrf-token"]').attr('content'))
-    Vue.http.headers.common['X-CSRF-Token'] = $('[name="csrf-token"]').attr('content')
-    return request
-  },
-  response: function (response) {
-    return response
-  }
+Vue.http.interceptors.push((request, next) => {
+  const TOKEN = $('[name="csrf-token"]').attr('content')
+  request.headers.set('X-CSRF-TOKEN', TOKEN)
+  // Vue.http.headers.common['X-CSRF-Token'] = $('[name="csrf-token"]').attr('content')
+  next()
 })
 
 Vue.component('modal', {
   props: ['order'],
+  data: function() {
+    return
+  }
   template: `
   <transition name="modal">
     <div class="modal-mask">
@@ -74,7 +73,7 @@ Vue.component('modal', {
   methods: {
     submitfeedback: function(order_id) {
       feedbackByOrderResource.save({order_id}, {}).then(response => {
-        console.log(response.body);
+        console.log(response.body)
       })
     }
   }
