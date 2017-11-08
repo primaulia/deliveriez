@@ -34,8 +34,6 @@ class OrdersController < ApplicationController
           total_price: item.unit_price * item.quantity
         }
       end
-      # order: {
-      # }
     }
 
     respond_to do |format|

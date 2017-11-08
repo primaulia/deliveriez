@@ -13,7 +13,7 @@ Vue.http.interceptors.push((request, next) => {
 Vue.component('modal', {
   props: ['order'],
   data: function() {
-    return
+    return {}
   },
   template: `
   <transition name="modal">
