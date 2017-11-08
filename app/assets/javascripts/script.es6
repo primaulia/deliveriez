@@ -14,7 +14,7 @@ Vue.component('modal', {
   props: ['order'],
   data: function() {
     return
-  }
+  },
   template: `
   <transition name="modal">
     <div class="modal-mask">
