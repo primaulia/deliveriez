@@ -16,6 +16,7 @@
 }
 
 .modal-container {
+ position: relative;
  width: 50%;
  max-width: 500px;
  margin: 0px auto;
@@ -37,7 +38,9 @@
 }
 
 .modal-default-button {
- float: right;
+ position: absolute;
+ right: 10px;
+ top: 10px;
 }
 
 .modal-mask {

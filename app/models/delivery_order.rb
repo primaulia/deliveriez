@@ -38,8 +38,14 @@ class DeliveryOrder < ApplicationRecord
   end
 
   # customize json serializer so model will automatically show only order_id, delivery_date, and delivery_time
+
+  # 8 nov, update as per json updates
   def as_json(options = {})
     options[:only] ||= [:id, :order_id, :delivery_date, :delivery_time, :feedback_submitted]
+    options[:include] = {
+      order_items: { only: [:order_item_id, :meal_name] }
+    }
+
     super(options)
   end
 end
