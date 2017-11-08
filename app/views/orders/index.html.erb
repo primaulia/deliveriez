@@ -23,29 +23,6 @@
     at {{ order.delivery_time_modal }}
     on {{ order.delivery_date_modal }}
   </h3>
-
-  <div slot="food">
-    <h3>How was the food?</h3>
-    <ul>
-      <li v-for="food in order.order_items">
-        {{ food.name }}
-        <button>thumbs up</button>
-        <button>thumbs down</button>
-      </li>
-    </ul>
-  </div>
-
-
-  <div slot="delivery">
-    <h3>How was our delivery?</h3>
-    <button>thumbs up</button>
-    <button>thumbs down</button>
-  </div>
-
-  <div slot="footer">
-    <input placeholder="Feel free to leave us a comment">
-    <button>Submit</button>
-  </div>
 </modal>
 
 <!-- <p>

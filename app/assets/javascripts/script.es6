@@ -5,6 +5,7 @@ const feedbackByOrderResource = Vue.resource('/orders{/order_id}/feedbacks')
 
 Vue.http.interceptors.push({
   request: function (request) {
+    console.log('token', $('[name="csrf-token"]').attr('content'))
     Vue.http.headers.common['X-CSRF-Token'] = $('[name="csrf-token"]').attr('content')
     return request
   },
@@ -14,7 +15,7 @@ Vue.http.interceptors.push({
 })
 
 Vue.component('modal', {
-  props: ['orderItem'],
+  props: ['order'],
   template: `
   <transition name="modal">
     <div class="modal-mask">
@@ -33,28 +34,50 @@ Vue.component('modal', {
             </p>
             <p>
               Need help urgently? <a href="#">Send us an email</a>
-              or call us at <a href="tel:+6531635335">+65 3163 5335</>
+              or call us at <a href="tel:+6531635335">+65 3163 5335</a>
             </p>
           </div>
           <div class="modal-body">
-            <slot name="food">
-              default body
-            </slot>
+            <div>
+              <button>All is good</button>
 
-            <slot name="delivery">
-              default body
-            </slot>
+              <h3>How was the food?</h3>
+              <ul>
+                <li v-for="food in order.order_items">
+                  <div>
+                    {{ food.name }}
+                    <button>thumbs up</button>
+                    <button>thumbs down</button>
+                  </div>
+                  <input placeholder="Feel free to leave us a comment">
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>How was our delivery?</h3>
+              <button>thumbs up</button>
+              <button>thumbs down</button>
+            </div>
           </div>
           <div class="modal-footer">
-            <slot name="footer">
-              default footer
-            </slot>
+            <div>
+              <input placeholder="Feel free to leave us a comment">
+              <button @click="submitfeedback(order.order_id)">Submit</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </transition>
-  `
+  `,
+  methods: {
+    submitfeedback: function(order_id) {
+      feedbackByOrderResource.save({order_id}, {}).then(response => {
+        console.log(response.body);
+      })
+    }
+  }
 })
 
 Vue.component('order-list', {
@@ -90,8 +113,8 @@ var app = new Vue({
         this.orders = response.body.orders
       })
     },
-    retrieveOrderItem: function(given_order_id) {
-      orderResource.get({order_id: given_order_id}).then(response => {
+    retrieveOrderItem: function(order_id) {
+      orderResource.get({order_id}).then(response => {
         this.order = response.body
         this.showModal = true
       })

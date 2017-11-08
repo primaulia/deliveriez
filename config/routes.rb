@@ -4,4 +4,7 @@ Rails.application.routes.draw do
             only: [:show, :index],
             param: :order_id
 
+  get '/orders/:order_id/feedbacks', to: 'feedbacks#index'
+  post '/orders/:order_id/feedbacks', to: 'feedbacks#create'
+
 end
