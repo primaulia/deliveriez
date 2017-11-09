@@ -20,7 +20,7 @@ class FeedbacksController < ApplicationController
         comment: ''
       }]
 
-      order_item.each do |item|
+      order_items.each do |item|
         feedback_output << {
           ratable_id: item.id,
           ratable_type: 'OrderItem',

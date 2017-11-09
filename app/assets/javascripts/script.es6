@@ -10,7 +10,7 @@ Vue.http.interceptors.push((request, next) => {
 })
 
 Vue.component('modal', {
-  props: ['order'],
+  props: ['order', 'finish'],
   data: function () {
     return {
       feedbacks: this.order.feedbacks
@@ -40,9 +40,10 @@ Vue.component('modal', {
               or call us at <a href="tel:+6531635335">+65 3163 5335</a>
             </p>
           </div>
-          <div class="modal-body">
+          <div v-if="!finish" class="modal-body">
             <div>
-              <button>All is good</button>
+              <!-- TODO -->
+              <!--button>All is good</button-->
 
               <h3>How was the food?</h3>
               <ul>
@@ -79,7 +80,7 @@ Vue.component('modal', {
               </label>
             </div>
           </div>
-          <div class="modal-footer">
+          <div v-if="!finish" class="modal-footer">
             <div>
               <input type="text" v-model="feedbacks[0].comment"
                      placeholder="Feel free to leave us a comment">
@@ -94,7 +95,7 @@ Vue.component('modal', {
   methods: {
     submitfeedback: function (order_id, feedbacks) {
       feedbackByOrderResource.save({order_id}, {feedbacks}).then(response => {
-        if(response.body.status === 'OK') this.$emit('close')
+        if(response.body.status === 'OK') this.$emit('finish')
       })
     }
   }
@@ -116,6 +117,7 @@ var app = new Vue({
   data: {
     orders: [],
     showModal: false,
+    finish: false,
     order: {},
     counter: 0
   },
@@ -133,6 +135,9 @@ var app = new Vue({
         this.order = response.body
         this.showModal = true
       })
+    },
+    closeModal: function() {
+
     }
   }
 })

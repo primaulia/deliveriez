@@ -12,16 +12,22 @@
 
 <modal
   :order="order"
+  :finish="finish"
   v-if="showModal"
+  @finish="finish = true"
   @close="showModal = false">
   <!--
     you can use custom content here to overwrite
     default content
   -->
-  <h3 slot="header">
+  <h3 v-if="!finish" slot="header">
     Hi Ernest! How was your order {{ order.order_id }}
     at {{ order.delivery_time_modal }}
     on {{ order.delivery_date_modal }}
+  </h3>
+
+  <h3 v-else slot="header">
+    Thank you!
   </h3>
 </modal>
 
