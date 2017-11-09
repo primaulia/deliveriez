@@ -11,8 +11,17 @@ Vue.http.interceptors.push((request, next) => {
 
 Vue.component('modal', {
   props: ['order'],
-  data: function() {
-    return {}
+  data: function () {
+    return {
+      deliveryOrder: {
+        ratable_id: this.order.id,
+        ratable_type: 'DeliveryOrder',
+        rating: 0,
+        comment: ''
+      },
+      order_items: this.order.order_items,
+      feedbacks: []
+    }
   },
   template: `
   <transition name="modal">
@@ -23,6 +32,9 @@ Vue.component('modal', {
             <button class="modal-default-button" @click="$emit('close')">
               X
             </button>
+            <!--div>
+              <pre>{ feedbacks: [ {{ deliveryOrder }}, {{ order_items }} ] }</pre>
+            </div-->
             <slot name="header">
               default header
             </slot>
@@ -47,21 +59,24 @@ Vue.component('modal', {
                     <button>thumbs up</button>
                     <button>thumbs down</button>
                   </div>
-                  <input placeholder="Feel free to leave us a comment">
+                  <input type="text" placeholder="Feel free to leave us a comment">
                 </li>
               </ul>
             </div>
 
             <div>
               <h3>How was our delivery?</h3>
-              <button>thumbs up</button>
-              <button>thumbs down</button>
+              <input type="radio" id="one" :value="1" v-model="deliveryOrder.rating">
+              <label for="one">Thumbs up</label>
+              <input type="radio" id="two" :value="-1" v-model="deliveryOrder.rating">
+              <label for="two">Thumbs down</label>
             </div>
           </div>
           <div class="modal-footer">
             <div>
-              <input placeholder="Feel free to leave us a comment">
-              <button @click="submitfeedback(order.order_id)">Submit</button>
+              <input type="text" v-model="deliveryOrder.comment"
+                     placeholder="Feel free to leave us a comment">
+              <button @click="submitfeedback(order.order_id, deliveryOrder)">Submit</button>
             </div>
           </div>
         </div>
@@ -70,8 +85,11 @@ Vue.component('modal', {
   </transition>
   `,
   methods: {
-    submitfeedback: function(order_id) {
-      feedbackByOrderResource.save({order_id}, {}).then(response => {
+    submitfeedback: function (order_id, deliveryFeedback) {
+      const feedbacks = []
+      feedbacks.push(deliveryFeedback)
+
+      feedbackByOrderResource.save({order_id}, {feedbacks}).then(response => {
         console.log(response.body)
       })
     }
@@ -86,12 +104,7 @@ Vue.component('order-list', {
       <span v-if="order.feedback_submitted">Thank you!</span>
       <a href="#" v-else @click="$emit('open')">Submit feedback</a>
     </li>
-  `,
-  data: function() {
-    return {
-      counter: this.initialCounter
-    }
-  }
+  `
 })
 
 var app = new Vue({
@@ -111,10 +124,12 @@ var app = new Vue({
         this.orders = response.body.orders
       })
     },
-    retrieveOrderItem: function(order_id) {
+    retrieveOrderItem: function (order_id) {
       orderResource.get({order_id}).then(response => {
         this.order = response.body
         this.showModal = true
+
+        console.log(this.order)
       })
     }
   }

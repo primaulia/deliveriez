@@ -43,10 +43,14 @@
  top: 10px;
 }
 
-.modal-mask {
-  input {
+.modal-container {
+  input[type="text"] {
     width: 100%;
     margin: 10px 0;
+  }
+
+  label {
+    display: inline-block;
   }
 }
 
