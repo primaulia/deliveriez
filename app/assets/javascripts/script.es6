@@ -13,14 +13,7 @@ Vue.component('modal', {
   props: ['order'],
   data: function () {
     return {
-      deliveryOrder: {
-        ratable_id: this.order.id,
-        ratable_type: 'DeliveryOrder',
-        rating: 0,
-        comment: ''
-      },
-      order_items: this.order.order_items,
-      feedbacks: []
+      feedbacks: this.order.feedbacks
     }
   },
   template: `
@@ -33,7 +26,7 @@ Vue.component('modal', {
               X
             </button>
             <!--div>
-              <pre>{ feedbacks: [ {{ deliveryOrder }}, {{ order_items }} ] }</pre>
+              <pre>{ {{ feedbacks }} }</pre>
             </div-->
             <slot name="header">
               default header
@@ -53,30 +46,44 @@ Vue.component('modal', {
 
               <h3>How was the food?</h3>
               <ul>
-                <li v-for="food in order.order_items">
+                <li v-for="(meal, key) in order.order_items">
                   <div>
-                    {{ food.name }}
-                    <button>thumbs up</button>
-                    <button>thumbs down</button>
+                    {{ meal.name }}
+                    <label>
+                      <input type="radio" :value="1" v-model="feedbacks[key + 1].rating">
+                      Thumbs up
+                    </label>
+                    <label>
+                      <input type="radio" id="mealDown" :value="-1" v-model="feedbacks[key + 1].rating">
+                      Thumbs down
+                    </label>
                   </div>
-                  <input type="text" placeholder="Feel free to leave us a comment">
+                  <input
+                    type="text"
+                    placeholder="Feel free to leave us a comment"
+                    v-model="feedbacks[key + 1].comment"
+                  >
                 </li>
               </ul>
             </div>
 
             <div>
               <h3>How was our delivery?</h3>
-              <input type="radio" id="one" :value="1" v-model="deliveryOrder.rating">
-              <label for="one">Thumbs up</label>
-              <input type="radio" id="two" :value="-1" v-model="deliveryOrder.rating">
-              <label for="two">Thumbs down</label>
+              <label>
+                <input type="radio" :value="1" v-model="feedbacks[0].rating">
+                Thumbs up
+              </label>
+              <label>
+                <input type="radio" :value="-1" v-model="feedbacks[0].rating">
+                Thumbs down
+              </label>
             </div>
           </div>
           <div class="modal-footer">
             <div>
-              <input type="text" v-model="deliveryOrder.comment"
+              <input type="text" v-model="feedbacks[0].comment"
                      placeholder="Feel free to leave us a comment">
-              <button @click="submitfeedback(order.order_id, deliveryOrder)">Submit</button>
+              <button @click="submitfeedback(order.order_id, feedbacks)">Submit</button>
             </div>
           </div>
         </div>
@@ -85,12 +92,9 @@ Vue.component('modal', {
   </transition>
   `,
   methods: {
-    submitfeedback: function (order_id, deliveryFeedback) {
-      const feedbacks = []
-      feedbacks.push(deliveryFeedback)
-
+    submitfeedback: function (order_id, feedbacks) {
       feedbackByOrderResource.save({order_id}, {feedbacks}).then(response => {
-        console.log(response.body)
+        if(response.body.status === 'OK') this.$emit('close')
       })
     }
   }
@@ -125,11 +129,9 @@ var app = new Vue({
       })
     },
     retrieveOrderItem: function (order_id) {
-      orderResource.get({order_id}).then(response => {
+      feedbackByOrderResource.get({order_id}).then(response => {
         this.order = response.body
         this.showModal = true
-
-        console.log(this.order)
       })
     }
   }
