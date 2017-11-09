@@ -1,7 +1,7 @@
 class DeliveryOrder < ApplicationRecord
   has_many :order_items, :dependent => :destroy
   # new update 6 Nov
-  has_one :feedback, as: :ratable
+  has_many :feedbacks, as: :ratable
 
   validates_presence_of :order_id
   validates_presence_of :serving_datetime
@@ -34,7 +34,7 @@ class DeliveryOrder < ApplicationRecord
   end
 
   def feedback_submitted
-    ! self.feedback.nil?
+    ! self.feedbacks.empty?
   end
 
   # customize json serializer so model will automatically show only order_id, delivery_date, and delivery_time

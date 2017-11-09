@@ -6,7 +6,6 @@ const feedbackByOrderResource = Vue.resource('/orders{/order_id}/feedbacks')
 Vue.http.interceptors.push((request, next) => {
   const TOKEN = $('[name="csrf-token"]').attr('content')
   request.headers.set('X-CSRF-TOKEN', TOKEN)
-  // Vue.http.headers.common['X-CSRF-Token'] = $('[name="csrf-token"]').attr('content')
   next()
 })
 

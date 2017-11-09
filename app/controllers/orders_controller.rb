@@ -20,6 +20,21 @@ class OrdersController < ApplicationController
     @order = DeliveryOrder.find_by(order_id: params[:order_id])
     @order_item = @order.order_items
 
+    feedbacks = []
+    feedbacks << @order.feedbacks.build
+
+    order_items_output = @order_item.map do |item|
+      {
+        name: item.meal.name,
+        quantity: item.quantity,
+        total_price: item.unit_price * item.quantity
+      }
+    end
+
+    @order_item.each do |item|
+      feedbacks << item.feedbacks.build
+    end
+
     # TODO: May need to refactor this
     output = {
       order_id: @order.order_id,
@@ -27,13 +42,8 @@ class OrdersController < ApplicationController
       delivery_time: @order.delivery_time,
       delivery_date_modal: @order.delivery_date_erb,
       delivery_time_modal: @order.delivery_time_erb,
-      order_items: @order_item.map do |item|
-        {
-          name: item.meal.name,
-          quantity: item.quantity,
-          total_price: item.unit_price * item.quantity
-        }
-      end
+      order_items: order_items_output,
+      feedbacks: feedbacks
     }
 
     respond_to do |format|
